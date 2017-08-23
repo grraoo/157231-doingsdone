@@ -145,7 +145,7 @@ $days_until_deadline = ($current_ts - $task_deadline_ts) / (60 * 60 * 24);
                         </td>
                     </tr>
                     <?php }?>
-                    <tr class="tasks__item task <?= ($days_until_deadline <= 0) ? 'task--important' : '' ?>">
+                    <tr class="tasks__item task<?= ($days_until_deadline <= 0) ? ' task--important' : '' ?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden" type="checkbox">
