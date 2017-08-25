@@ -152,6 +152,7 @@ $tasks = [
                 <table class="tasks">
 
                     <?php foreach ($tasks as $key => $task): ?>
+                    <?php if($show_complete_tasks || !$task['isDone']): ?>
                     <tr class="tasks__item task <?= $task['isDone'] ? ' task--completed' : '' ?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
@@ -180,6 +181,7 @@ $tasks = [
                           <?php endif;?>
                         </td>
                     </tr>
+                    <?endif;?>
                     <?php endforeach;?>
 
                 </table>
