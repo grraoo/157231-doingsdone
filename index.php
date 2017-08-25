@@ -100,7 +100,7 @@ $tasks = [
                     <ul class="main-navigation__list">
                         <?php foreach ($tasks as $key => $task): ?>
                         <li class="main-navigation__list-item<?= !$key ? ' main-navigation__list-item--active' : '' ?>">
-                            <a class="main-navigation__list-item-link" href="#"><?=$task['name']?></a>
+                            <a class="main-navigation__list-item-link" href="#"><?=$task['category']?></a>
                             <span class="main-navigation__list-item-count"><?=rand(5, 30)?></span>
                         </li>
                         <?endforeach;?>
