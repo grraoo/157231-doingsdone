@@ -15,6 +15,10 @@ $date_deadline =   date("d.m.Y", $task_deadline_ts) ;
 // в эту переменную запишите кол-во дней до даты задачи
 $days_until_deadline = ($current_ts - $task_deadline_ts) / (60 * 60 * 24);
 
+$projects = [
+    "Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"
+];
+
 $tasks = [
     [
         'name' => 'Собеседование в IT компании',
@@ -42,13 +46,13 @@ $tasks = [
     ],
     [
         'name' => 'Купить корм для кота',
-        'date' => '',
+        'date' => 'Нет',
         'category' => 'Домашние дела',
         'isDone' => false
     ],
     [
         'name' => 'Заказать пиццу',
-        'date' => '',
+        'date' => 'Нет',
         'category' => 'Домашние дела',
         'isDone' => false
     ]
@@ -98,10 +102,10 @@ $tasks = [
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <?php foreach ($tasks as $key => $task): ?>
+                        <?php foreach ($projects as $key => $project): ?>
                         <li class="main-navigation__list-item<?= !$key ? ' main-navigation__list-item--active' : '' ?>">
-                            <a class="main-navigation__list-item-link" href="#"><?=$task['category']?></a>
-                            <span class="main-navigation__list-item-count"><?=rand(5, 30)?></span>
+                            <a class="main-navigation__list-item-link" href="#"><?=$project?></a>
+                            <span class="main-navigation__list-item-count"><?=rand(0, 10)?></span>
                         </li>
                         <?endforeach;?>
                     </ul>
