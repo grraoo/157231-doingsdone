@@ -58,8 +58,11 @@ $tasks = [
   ]
 ];
 
-function countPojectTasks($arTasks, $projectName) {
+function countProjectTasks($arTasks, $projectName) {
     $quantity = 0;
+    if ($projectName == 'Все') {
+        return count($arTasks);
+    }
     foreach ($arTasks as $task) {
         if($task['category'] == $projectName) {
             $quantity++;
@@ -116,10 +119,9 @@ function countPojectTasks($arTasks, $projectName) {
 
                         <li class="main-navigation__list-item<?= !$key ? ' main-navigation__list-item--active' : '' ?>">
                             <a class="main-navigation__list-item-link" href="#"><?=$projectName?></a>
-                            <span class="main-navigation__list-item-count"><?= $projectName == "Все" ? count($tasks) : countPojectTasks($tasks, $projectName)?></span>
+                            <span class="main-navigation__list-item-count"><?=countProjectTasks($tasks, $projectName)?></span>
                         </li>
                         <?php endforeach;?>
-
                     </ul>
                 </nav>
 
