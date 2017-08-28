@@ -16,47 +16,60 @@ $date_deadline =   date("d.m.Y", $task_deadline_ts) ;
 $days_until_deadline = ($current_ts - $task_deadline_ts) / (60 * 60 * 24);
 
 $projects = [
-    "Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"
+  "Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"
 ];
 
 $tasks = [
-    [
-        'name' => 'Собеседование в IT компании',
-        'date' => '01.06.2018',
-        'category' => 'Работа',
-        'isDone' => false
-    ],
-    [
-        'name' => 'Выполнить тестовое задание',
-        'date' => '25.05.2018',
-        'category' => 'Работа',
-        'isDone' => false
-    ],
-    [
-        'name' => 'Сделать задание первого раздела',
-        'date' => '21.04.2018',
-        'category' => 'Учёба',
-        'isDone' => true
-    ],
-    [
-        'name' => 'Встреча с другом',
-        'date' => '22.04.2018',
-        'category' => 'Входящие',
-        'isDone' => false
-    ],
-    [
-        'name' => 'Купить корм для кота',
-        'date' => 'Нет',
-        'category' => 'Домашние дела',
-        'isDone' => false
-    ],
-    [
-        'name' => 'Заказать пиццу',
-        'date' => 'Нет',
-        'category' => 'Домашние дела',
-        'isDone' => false
-    ]
-]
+  [
+      'name' => 'Собеседование в IT компании',
+      'date' => '01.06.2018',
+      'category' => 'Работа',
+      'isDone' => false
+  ],
+  [
+      'name' => 'Выполнить тестовое задание',
+      'date' => '25.05.2018',
+      'category' => 'Работа',
+      'isDone' => false
+  ],
+  [
+      'name' => 'Сделать задание первого раздела',
+      'date' => '21.04.2018',
+      'category' => 'Учеба',
+      'isDone' => true
+  ],
+  [
+      'name' => 'Встреча с другом',
+      'date' => '22.04.2018',
+      'category' => 'Входящие',
+      'isDone' => false
+  ],
+  [
+      'name' => 'Купить корм для кота',
+      'date' => '',
+      'category' => 'Домашние дела',
+      'isDone' => false
+  ],
+  [
+      'name' => 'Заказать пиццу',
+      'date' => '',
+      'category' => 'Домашние дела',
+      'isDone' => false
+  ]
+];
+
+function countProjectTasks($arTasks, $projectName) {
+    $quantity = 0;
+    if ($projectName == 'Все') {
+        return count($arTasks);
+    }
+    foreach ($arTasks as $task) {
+        if($task['category'] == $projectName) {
+            $quantity++;
+        }
+    }
+    return $quantity;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,12 +115,13 @@ $tasks = [
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <?php foreach ($projects as $key => $project): ?>
+                        <?php foreach ($projects as $key => $projectName):?>
+
                         <li class="main-navigation__list-item<?= !$key ? ' main-navigation__list-item--active' : '' ?>">
-                            <a class="main-navigation__list-item-link" href="#"><?=$project?></a>
-                            <span class="main-navigation__list-item-count"><?=rand(0, 10)?></span>
+                            <a class="main-navigation__list-item-link" href="#"><?=$projectName?></a>
+                            <span class="main-navigation__list-item-count"><?=countProjectTasks($tasks, $projectName)?></span>
                         </li>
-                        <?endforeach;?>
+                        <?php endforeach;?>
                     </ul>
                 </nav>
 
