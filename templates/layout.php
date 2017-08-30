@@ -1,9 +1,9 @@
-<?
-$pageTitle = $templateData['title'];
-$projects = $templateData['projects'];
-$tasks = $templateData['tasks'];
-$content = $templateData['content'];
-$userName = $templateData['user'];
+<?php
+    $pageTitle = $templateData['title'];
+    $projects = $templateData['projects'];
+    $tasks = $templateData['tasks'];
+    $content = $templateData['content'];
+    $userName = $templateData['user'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
