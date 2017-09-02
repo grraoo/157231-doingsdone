@@ -74,7 +74,7 @@ function countProjectTasks($arTasks, $projectName) {
 function renderTemplate($templatePath, $templateData) {
 
     if(file_exists($templatePath)) {
-        ob_start();
+        ob_start('ob_gzhandler');
         require $templatePath;
         $html = ob_get_clean();
 

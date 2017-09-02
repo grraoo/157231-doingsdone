@@ -1,6 +1,7 @@
 <?php
 $tasks = $templateData['tasks'];
 $show_complete_tasks = $templateData['showAll'];
+$projects = $templateData['projects'];
 ?>
 
 <h2 class="content__main-heading">Список задач</h2>
@@ -45,7 +46,10 @@ $show_complete_tasks = $templateData['showAll'];
                     <?php foreach ($tasks as $key => $task): ?>
 
 
-                    <?php if($show_complete_tasks || !$task['isDone']): ?>
+                    <?php if(
+                        ($show_complete_tasks || !$task['isDone']) &&
+                        ($task['category'] == $projects[$_GET['project']] ) || !isset($_GET['project'])
+                    ): ?>
                     <tr class="tasks__item task <?= $task['isDone'] ? ' task--completed' : '' ?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">

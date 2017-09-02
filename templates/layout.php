@@ -51,8 +51,8 @@
                     <ul class="main-navigation__list">
                         <?php foreach ($projects as $key => $projectName):?>
 
-                        <li class="main-navigation__list-item<?= !$key ? ' main-navigation__list-item--active' : '' ?>">
-                            <a class="main-navigation__list-item-link" href="#"><?=$projectName?></a>
+                        <li class="main-navigation__list-item<?=($key == $_GET['project']) ? ' main-navigation__list-item--active' : '' ?>">
+                            <a class="main-navigation__list-item-link" href="<?= !$key ? 'index.php' : 'index.php?project='.$key?>"><?=$projectName?></a>
                             <span class="main-navigation__list-item-count"><?=countProjectTasks($tasks, $projectName)?></span>
                         </li>
                         <?php endforeach;?>
