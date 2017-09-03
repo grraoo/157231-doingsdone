@@ -20,11 +20,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
     }
     if(!count($errors)) {
         if (isset($_FILES['preview'])) {
-          $finfo = finfo_open(FILEINFO_MIME_TYPE);
-          $file_name = $_FILES['preview']['tmp_name'];
-          $file_size = $_FILES['preview']['size'];
-          $file_type = finfo_file($finfo, $file_name);
-          $file_url = $_SERVER['DOCUMENT_ROOT'].'/'. $_FILES['preview']['name'];
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $file_name = $_FILES['preview']['tmp_name'];
+            $file_size = $_FILES['preview']['size'];
+            $file_type = finfo_file($finfo, $file_name);
+            $file_url = $_SERVER['DOCUMENT_ROOT'].'/'. $_FILES['preview']['name'];
 
           move_uploaded_file($file_name, $file_url);
         }
