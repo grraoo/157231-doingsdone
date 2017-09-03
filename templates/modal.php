@@ -49,12 +49,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
     <select class="form__input form__input--select" name="project" id="project">
         <?php foreach($projects as $project) {
             if($project !== 'Все') {?>
-                <option value="<?= $project?>" <?= ($project == $_POST['project']) ? 'selected' : ''?>>
-                    <?=$project?>
-                </option>
+                <option value="<?= $project?>" <?= ($project == $_POST['project']) ? 'selected' : ''?>><?=$project?></option>
             <?php }
         }?>
     </select>
+
     </div>
 
     <div class="form__row">
