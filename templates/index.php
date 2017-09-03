@@ -79,7 +79,7 @@ $category = isset($_GET['project']) ? $_GET['project'] : '';
                     <?php endif;?>
                 </td>
             </tr>
-        <?endif;?>
+        <?php endif;?>
     <?php endforeach;?>
 
 </table>

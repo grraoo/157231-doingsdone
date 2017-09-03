@@ -4,6 +4,8 @@
     $tasks = $templateData['tasks'];
     $content = $templateData['content'];
     $userName = $templateData['user'];
+    $add = $templateData['add'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +17,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body><!--class="overlay"-->
+<body <?= $add ? 'class="overlay"' : '' ?>>
 
 <h1 class="visually-hidden">Дела в порядке</h1>
 
@@ -27,7 +29,7 @@
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus" href="#">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus" href="?add=true">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__image">
@@ -154,5 +156,6 @@
 </div>
 
 <script type="text/javascript" src="js/script.js"></script>
+<?php if($add) {require_once('templates/modal.php');} ?>
 </body>
 </html>
