@@ -1,7 +1,7 @@
 <?php
     require_once 'functions.php';
 
-    if(!isset($projects[$_GET['project']])) {
+    if(isset($_GET['project']) && !isset($projects[$_GET['project']])) {
         http_response_code(404);
     }
 
