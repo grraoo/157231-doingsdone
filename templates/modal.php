@@ -24,12 +24,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
           $file_name = $_FILES['preview']['tmp_name'];
           $file_size = $_FILES['preview']['size'];
           $file_type = finfo_file($finfo, $file_name);
-          $file_url = $_SERVER['DOCUMENT_ROOT'].'\\'. $_FILES['preview']['name'];
-
+          $file_url = $_SERVER['DOCUMENT_ROOT'].'/'. $_FILES['preview']['name'];
 
           move_uploaded_file($file_name, $file_url);
-
-
         }
         header("Location: index.php?success=true&name=$name&date=$date&category=$project");
     }
