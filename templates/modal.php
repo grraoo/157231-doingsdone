@@ -68,12 +68,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
     <div class="form__row">
     <label class="form__label">Файл</label>
     <div class="form__input-file">
+        <input class="visually-hidden" type="file" name="preview" id="preview" value="">
 
-        <label style="position: relative" class="button button--transparent" >
-            <input class="visually-hidden" type="file" name="preview" value="">
+        <label class="button button--transparent" for="preview">
             <span>Выберите файл</span>
         </label>
-
     </div>
     </div>
 
