@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE);
 $tasks = $templateData['tasks'];
 $show_complete_tasks = isset($_GET['show_completed']) ? $_GET['show_completed'] : $templateData['showAll'];
 $projects = $templateData['projects'];
