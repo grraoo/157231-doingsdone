@@ -1,41 +1,45 @@
 <?php
 
-    require_once 'functions.php';
+require_once 'config.php';
+require_once 'data.php';
+require_once 'functions.php';
 
-    if(isset($_GET['success'])) {
+if(isset($_GET['success'])) {
+    array_unshift($tasks, [
+        'name' => $_GET['name'],
+        'date' => $_GET['date'],
+        'category' => $_GET['category'],
+        'isDone' => false
+    ]);
+}
 
-        array_unshift($tasks, [
-            'name' => $_GET['name'],
-            'date' => $_GET['date'],
-            'category' => $_GET['category'],
-            'isDone' => false
-        ]);
+if(isset($_GET['project']) && !isset($projects[$_GET['project']])) {
+    http_response_code(404);
+}
 
+$showAll = isset($_GET['show_completed']) ? $_GET['show_completed'] : $show_complete_tasks;
+$category = isset($_GET['project']) ? $_GET['project'] : '';
 
-    }
+$indexData = [
+    'tasks' => $tasks,
+    'projects' => $projects,
+    'showAll' => $showAll,
+    'category' => $category
+];
 
-    if(isset($_GET['project']) && !isset($projects[$_GET['project']])) {
-        http_response_code(404);
-    }
+$content = renderTemplate('templates/index.php',$indexData );
 
-    $indexData = [
-        'tasks' => $tasks,
-        'projects' => $projects,
-        'showAll' => $show_complete_tasks
-    ];
+$add = isset($_GET['add']);
+$activeProject = isset($_GET['project']) ? $_GET['project'] : 0;
 
-    $content = renderTemplate('templates/index.php',$indexData );
+$layoutData = [
+    'title' => 'Список задач',
+    'user' => 'Grraoo',
+    'projects' => $projects,
+    'tasks' => $tasks,
+    'content' => $content,
+    'add' => $add,
+    'category' => $activeProject
+];
 
-    $add = isset($_GET['add']);
-
-    $layoutData = [
-        'title' => 'Список задач',
-        'user' => 'Grraoo',
-        'projects' => $projects,
-        'tasks' => $tasks,
-        'content' => $content,
-        'add' => $add
-    ];
-
-    print(renderTemplate('templates/layout.php', $layoutData));
-?>
+print(renderTemplate('templates/layout.php', $layoutData));

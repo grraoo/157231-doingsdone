@@ -1,9 +1,8 @@
 <?php
-error_reporting(E_ALL & ~E_NOTICE);
 $tasks = $templateData['tasks'];
-$show_complete_tasks = isset($_GET['show_completed']) ? $_GET['show_completed'] : $templateData['showAll'];
+$show_complete_tasks = $templateData['showAll'];
 $projects = $templateData['projects'];
-$category = isset($_GET['project']) ? $_GET['project'] : '';
+$category = $templateData['category'];;
 ?>
 <h2 class="content__main-heading">Список задач</h2>
 
@@ -44,13 +43,12 @@ $category = isset($_GET['project']) ? $_GET['project'] : '';
 </div>
 
 <table class="tasks">
-    <?php
-    foreach ($tasks as $key => $task):
+    <?php foreach ($tasks as $key => $task):?>
 
-        $showComplete = ($show_complete_tasks || !$task['isDone']);
-        $currentCat = (($task['category'] === $projects[$category]) || !isset($_GET['project']));
+        <?php $showComplete = ($show_complete_tasks || !$task['isDone']);?>
+        <?php $currentCat = (!isset($_GET['project']) || $task['category'] === $projects[$category]);?>
 
-        if($showComplete && $currentCat): ?>
+        <?php if($showComplete && $currentCat): ?>
 
             <tr class="tasks__item task <?= $task['isDone'] ? ' task--completed' : '' ?>">
                 <td class="task__select">

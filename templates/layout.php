@@ -5,7 +5,7 @@
     $content = $templateData['content'];
     $userName = $templateData['user'];
     $add = $templateData['add'];
-
+    $category = $templateData['category'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,10 +53,10 @@
                     <ul class="main-navigation__list">
                         <?php foreach ($projects as $key => $projectName):?>
 
-                        <li class="main-navigation__list-item<?=($key == $_GET['project']) ? ' main-navigation__list-item--active' : '' ?>">
-                            <a class="main-navigation__list-item-link" href="<?= !$key ? 'index.php' : 'index.php?project='.$key?>"><?=$projectName?></a>
-                            <span class="main-navigation__list-item-count"><?=countProjectTasks($tasks, $projectName)?></span>
-                        </li>
+                            <li class="main-navigation__list-item<?=$key == $category ? ' main-navigation__list-item--active' : '' ?>">
+                                <a class="main-navigation__list-item-link" href="<?= !$key ? 'index.php' : 'index.php?project='.$key?>"><?=$projectName?></a>
+                                <span class="main-navigation__list-item-count"><?=countProjectTasks($tasks, $projectName)?></span>
+                            </li>
                         <?php endforeach;?>
                     </ul>
                 </nav>
@@ -65,7 +65,6 @@
             </section>
 
             <main class="content__main">
-
                 <?php print($content); ?>
             </main>
         </div>
