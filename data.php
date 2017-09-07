@@ -52,6 +52,3 @@ $tasks = [
       'isDone' => false
   ]
 ];
-
-
-$allowed = [];

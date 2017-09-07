@@ -1,8 +1,8 @@
 <?php
-$tasks = $templateData['tasks'];
-$show_complete_tasks = $templateData['showAll'];
-$projects = $templateData['projects'];
-$category = $templateData['category'];;
+    $tasks = $templateData['tasks'];
+    $show_complete_tasks = $templateData['showAll'];
+    $projects = $templateData['projects'];
+    $category = $templateData['category'];;
 ?>
 <h2 class="content__main-heading">Список задач</h2>
 

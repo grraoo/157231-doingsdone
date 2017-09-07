@@ -4,31 +4,30 @@ require_once 'config.php';
 require_once 'data.php';
 require_once 'functions.php';
 
+session_start();
 if(isset($_GET['success'])) {
-    array_unshift($tasks, [
-        'name' => $_GET['name'],
-        'date' => $_GET['date'],
-        'category' => $_GET['category'],
-        'isDone' => false
-    ]);
+    array_unshift($tasks, $_SESSION['task']);
 }
-
 
 if(isset($_GET['project']) && !isset($projects[$_GET['project']])) {
     http_response_code(404);
 }
 
-session_start();
 if(isset($_GET['logout'])) {
     $_SESSION = [];
 }
 
-$sessId = session_id();
-$fingerPrint = getUserFingerprint(1, 1);
+$isLoggedUser = isset($_SESSION['user']);
 
-$isLoggedUser = $_SESSION[$sessId] && $_SESSION[$sessId] == $fingerPrint;
+$guestData  = [
+    'login' => isset($_GET['login']),
+    'users' => $users
+];
 
-$_SESSION[$sessId] = $fingerPrint;
+if(!$isLoggedUser) {
+    print(renderTemplate('templates/guest.php', $guestData));
+    die();
+}
 
 $showAll = isset($_GET['show_completed']) ? $_GET['show_completed'] : $show_complete_tasks;
 $category = isset($_GET['project']) ? $_GET['project'] : '';
@@ -42,23 +41,20 @@ $indexData = [
 
 $content = renderTemplate('templates/index.php',$indexData);
 
-$headerData = ['logged' => $isLoggedUser];
-
 $header = renderTemplate('templates/header.php', $headerData);
 
 $add = isset($_GET['add']);
 $activeProject = isset($_GET['project']) ? $_GET['project'] : 0;
 
 $layoutData = [
-    'logged' => $isLoggedUser,
     'header' => $header,
     'title' => 'Список задач',
-    'user' => 'Grraoo',
     'projects' => $projects,
     'tasks' => $tasks,
     'content' => $content,
     'add' => $add,
-    'category' => $activeProject
+    'category' => $activeProject,
+    'userName' => $_SESSION['user']['name']
 ];
 
 print(renderTemplate('templates/layout.php', $layoutData));

@@ -1,3 +1,39 @@
+<?php
+  $login = $templateData['login'];
+  $users = $templateData['users'];
+
+  $required = ['email', 'password'];
+  $errors = [];
+  if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
+
+    foreach($_POST as $key => $value) {
+        if(in_array($key, $required) && $value == '') {
+            $errors[] = $key;
+        }
+    }
+    $email = isset($_POST['email']) ? ($_POST['email']) : '';
+    $incomingPassword = isset($_POST['password']) ? ($_POST['password']) : '';
+
+    $passwordHash = password_hash($incomingPassword, PASSWORD_DEFAULT);
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !in_array('email', $errors)) {
+        $errors[] = 'email';
+    } else {
+
+        $currentUser = getUserByEmail($email, $users);
+
+        if($currentUser && !password_verify($incomingPassword, $currentUser['password'])) {
+            $errors[] = 'password';
+        }
+    }
+
+    if(!count($errors)) {
+        session_start();
+        $_SESSION['user'] = $currentUser;
+        header("Location: index.php");
+    }
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +44,7 @@
   <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="body-background"><!--class="overlay"-->
+<body class="body-background<?= $login ? ' overlay' : ''?>"><!--class="overlay"-->
   <h1 class="visually-hidden">Дела в порядке</h1>
 
   <div class="page-wrapper">
@@ -19,7 +55,7 @@
         </a>
 
         <div class="main-header__side">
-          <a class="main-header__side-item button button--transparent" href="#">Войти</a>
+          <a class="main-header__side-item button button--transparent" href="?login">Войти</a>
         </div>
       </header>
 
@@ -78,24 +114,28 @@
     </div>
   </footer>
 
-  <div class="modal" hidden>
+  <div class="modal" <?= $login ? '' : 'hidden'?>>
     <button class="modal__close" type="button" name="button">Закрыть</button>
 
     <h2 class="modal__heading">Вход на сайт</h2>
 
-    <form class="form" class="" action="index.html" method="post">
+    <form class="form" class="" action="index.php?login" method="post">
       <div class="form__row">
         <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
-        <input class="form__input form__input--error" type="text" name="email" id="email" value="" placeholder="Введите e-mail">
-
-        <p class="form__message">E-mail введён некорректно</p>
+        <input class="form__input<?= in_array('email', $errors) ? ' form__input--error' : ''?>" type="text" name="email" id="email" value="<?=$email?>" placeholder="Введите e-mail">
+        <?php if(in_array('email', $errors)):?>
+            <p class="form__message">E-mail введён некорректно</p>
+        <?php endif;?>
       </div>
 
       <div class="form__row">
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
         <input class="form__input" type="password" name="password" id="password" value="" placeholder="Введите пароль">
+        <?php if(in_array('password', $errors)):?>
+            <p class="form__message">Вы ввели неверный пароль</p>
+        <?php endif;?>
       </div>
 
       <div class="form__row">

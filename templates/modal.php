@@ -20,15 +20,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
         $errors[] = 'date';
     }
 
-    $name = isset($_POST['name']) ? urlencode(htmlspecialchars($_POST['name'])) : '';
+    $name = isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '';
 
     if(!count($errors)) {
         $preview = isset($_FILES['preview']) ? $_FILES['preview'] : false;
         if($preview){
             saveFile($preview);
         }
-
-        header("Location: index.php?success=true&name=$name&date=$date&category=$category");
+        $_SESSION['task'] = [
+            'name' => $name,
+            'date' => $date,
+            'category' => $category,
+            'isDone' => false
+        ];
+        header("Location: index.php?success=true");
     }
 }
 ?>

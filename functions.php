@@ -65,3 +65,15 @@ function getUserFingerprint ($includeIp = true, $includeCity = true) {
 
     return $fingerPrint;
 }
+
+
+function getUserByEmail ($email, $users) {
+    $result = null;
+    foreach ($users as $user) {
+        if ($user['email'] == $email) {
+            $result = $user;
+            break;
+        }
+    }
+    return $result;
+}
