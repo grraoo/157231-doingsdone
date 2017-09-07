@@ -66,7 +66,14 @@ function getUserFingerprint ($includeIp = true, $includeCity = true) {
     return $fingerPrint;
 }
 
-
+/**
+ * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
+ *
+ * @param $email string E-mail для поиска пользователя
+ * @param array $users массив пользователей
+ *
+ * @return найденный пользователь
+ */
 function getUserByEmail ($email, $users) {
     $result = null;
     foreach ($users as $user) {
