@@ -43,3 +43,25 @@ function saveFile($file) {
 
   return $file_url;
 }
+
+
+function getUserFingerprint ($includeIp = true, $includeCity = true) {
+    $ipAddr = $_SERVER['REMOTE_ADDR'];
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+    $geo_data = file_get_contents('https://freegeoip.net/json/' . $ipAddr);
+    $geoData = json_decode($geo_data, true);
+    $parts = [$userAgent, $geoData['country_code']];
+
+    if($includeIp) {
+        $parts[] = $ipAddr;
+    }
+    if($includeCity) {
+        $parts[] = $geoData['city'];
+    }
+
+    $finger = implode('', $parts);
+    $fingerPrint = md5($finger);
+
+    return $fingerPrint;
+}

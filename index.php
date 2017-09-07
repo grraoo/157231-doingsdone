@@ -13,9 +13,22 @@ if(isset($_GET['success'])) {
     ]);
 }
 
+
 if(isset($_GET['project']) && !isset($projects[$_GET['project']])) {
     http_response_code(404);
 }
+
+session_start();
+if(isset($_GET['logout'])) {
+    $_SESSION = [];
+}
+
+$sessId = session_id();
+$fingerPrint = getUserFingerprint(1, 1);
+
+$isLoggedUser = $_SESSION[$sessId] && $_SESSION[$sessId] == $fingerPrint;
+
+$_SESSION[$sessId] = $fingerPrint;
 
 $showAll = isset($_GET['show_completed']) ? $_GET['show_completed'] : $show_complete_tasks;
 $category = isset($_GET['project']) ? $_GET['project'] : '';
@@ -27,12 +40,18 @@ $indexData = [
     'category' => $category
 ];
 
-$content = renderTemplate('templates/index.php',$indexData );
+$content = renderTemplate('templates/index.php',$indexData);
+
+$headerData = ['logged' => $isLoggedUser];
+
+$header = renderTemplate('templates/header.php', $headerData);
 
 $add = isset($_GET['add']);
 $activeProject = isset($_GET['project']) ? $_GET['project'] : 0;
 
 $layoutData = [
+    'logged' => $isLoggedUser,
+    'header' => $header,
     'title' => 'Список задач',
     'user' => 'Grraoo',
     'projects' => $projects,
