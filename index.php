@@ -17,17 +17,14 @@ if(isset($_GET['logout'])) {
     $_SESSION = [];
 }
 
+$login = isset($_GET['login']);
 $isLoggedUser = isset($_SESSION['user']);
+$userName = isset($_SESSION['user']) ? $_SESSION['user']['name'] : '';
 
 $guestData  = [
-    'login' => isset($_GET['login']),
+    'login' => $login,
     'users' => $users
 ];
-
-if(!$isLoggedUser) {
-    print(renderTemplate('templates/guest.php', $guestData));
-    die();
-}
 
 $showAll = isset($_GET['show_completed']) ? $_GET['show_completed'] : $show_complete_tasks;
 $category = isset($_GET['project']) ? $_GET['project'] : '';
@@ -39,22 +36,42 @@ $indexData = [
     'category' => $category
 ];
 
-$content = renderTemplate('templates/index.php',$indexData);
+if(!$isLoggedUser) {
+    $content = renderTemplate('templates/guest.php', $guestData);
+} else {
+    $content = renderTemplate('templates/index.php',$indexData);
+}
+
+$headerData = [
+    'logged' => $isLoggedUser,
+    'userName' => $userName,
+];
 
 $header = renderTemplate('templates/header.php', $headerData);
 
+$loginData = [
+    'login' => $login,
+    'users' => $users
+];
+
+$loginModal = renderTemplate('templates/login_modal.php', $loginData);
+
 $add = isset($_GET['add']);
 $activeProject = isset($_GET['project']) ? $_GET['project'] : 0;
+$title = $isLoggedUser ? 'Список задач' : 'Дела в порядке';
 
 $layoutData = [
+    'login' => $login,
     'header' => $header,
-    'title' => 'Список задач',
+    'title' => $title,
     'projects' => $projects,
     'tasks' => $tasks,
     'content' => $content,
     'add' => $add,
     'category' => $activeProject,
-    'userName' => $_SESSION['user']['name']
+    'userName' => $userName,
+    'logged' => $isLoggedUser,
+    'loginModal' => $loginModal
 ];
 
 print(renderTemplate('templates/layout.php', $layoutData));

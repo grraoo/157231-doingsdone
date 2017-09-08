@@ -7,6 +7,9 @@
     $category = $templateData['category'];
     $login = $templateData['login'];
     $userName = $templateData['userName'];
+    $header = $templateData['header'];
+    $logged = $templateData['logged'];
+    $loginModal = $templateData['loginModal'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,56 +20,44 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
+<?php if($logged):?>
 <body <?= $add || $login ? 'class="overlay"' : '' ?>>
+<?php else:?>
+<body <?= $add || $login ? 'class="body-background overlay"' : 'class="body-background"' ?>>
+<?php endif;?>
 
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container container--with-sidebar">
-        <header class="main-header">
-            <a href="#">
-                <img src="img/logo.png" width="153" height="42" alt="Логитип Дела в порядке">
-            </a>
+    <div class="container<?= $logged ? ' container--with-sidebar' : '' ?>">
 
-            <div class="main-header__side">
-                <a class="main-header__side-item button button--plus" href="?add=true">Добавить задачу</a>
-
-                <div class="main-header__side-item user-menu">
-                    <div class="user-menu__image">
-                        <img src="img/user-pic.jpg" width="40" height="40" alt="Пользователь">
-                    </div>
-
-                    <div class="user-menu__data">
-                        <p><?=$userName?></p>
-
-                        <a href="?logout=true">Выйти</a>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <?php print($header);?>
 
         <div class="content">
-            <section class="content__side">
-                <h2 class="content__side-heading">Проекты</h2>
+            <?php if($logged) :?>
+                <section class="content__side">
+                    <h2 class="content__side-heading">Проекты</h2>
 
-                <nav class="main-navigation">
-                    <ul class="main-navigation__list">
-                        <?php foreach ($projects as $key => $projectName):?>
-                            <li class="main-navigation__list-item<?=$key == $category ? ' main-navigation__list-item--active' : '' ?>">
-                                <a class="main-navigation__list-item-link" href="<?= !$key ? 'index.php' : 'index.php?project='.$key?>"><?=$projectName?></a>
-                                <span class="main-navigation__list-item-count"><?=countProjectTasks($tasks, $projectName)?></span>
-                            </li>
-                        <?php endforeach;?>
-                    </ul>
-                </nav>
+                    <nav class="main-navigation">
+                        <ul class="main-navigation__list">
+                            <?php foreach ($projects as $key => $projectName):?>
+                                <li class="main-navigation__list-item<?=$key == $category ? ' main-navigation__list-item--active' : '' ?>">
+                                    <a class="main-navigation__list-item-link" href="<?= !$key ? 'index.php' : 'index.php?project='.$key?>"><?=$projectName?></a>
+                                    <span class="main-navigation__list-item-count"><?=countProjectTasks($tasks, $projectName)?></span>
+                                </li>
+                            <?php endforeach;?>
+                        </ul>
+                    </nav>
 
-                <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
-            </section>
+                    <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
+                </section>
 
-            <main class="content__main">
-                <?php print($content); ?>
-            </main>
+                <main class="content__main">
+                    <?php print($content); ?>
+                </main>
+            <?php else:?>
+                <?php print($content)?>
+            <?php endif;?>
         </div>
     </div>
 </div>
@@ -110,6 +101,7 @@
     </div>
 </footer>
 
+<?php if($login) {print($loginModal);} ?>
 <?php if($add) {require_once('templates/modal.php');} ?>
 
 <script type="text/javascript" src="js/script.js"></script>
