@@ -1,41 +1,77 @@
 <?php
 
-    require_once 'functions.php';
+require_once 'config.php';
+require_once 'data.php';
+require_once 'functions.php';
 
-    if(isset($_GET['success'])) {
+session_start();
+if(isset($_GET['success'])) {
+    array_unshift($tasks, $_SESSION['task']);
+}
 
-        array_unshift($tasks, [
-            'name' => $_GET['name'],
-            'date' => $_GET['date'],
-            'category' => $_GET['category'],
-            'isDone' => false
-        ]);
+if(isset($_GET['project']) && !isset($projects[$_GET['project']])) {
+    http_response_code(404);
+}
 
+if(isset($_GET['logout'])) {
+    $_SESSION = [];
+}
 
-    }
+$login = isset($_GET['login']);
+$isLoggedUser = isset($_SESSION['user']);
+$userName = isset($_SESSION['user']) ? $_SESSION['user']['name'] : '';
 
-    if(isset($_GET['project']) && !isset($projects[$_GET['project']])) {
-        http_response_code(404);
-    }
+$guestData  = [
+    'login' => $login,
+    'users' => $users
+];
 
-    $indexData = [
-        'tasks' => $tasks,
-        'projects' => $projects,
-        'showAll' => $show_complete_tasks
-    ];
+$showAll = isset($_GET['show_completed']) ? $_GET['show_completed'] : $show_complete_tasks;
+$category = isset($_GET['project']) ? $_GET['project'] : '';
 
-    $content = renderTemplate('templates/index.php',$indexData );
+$indexData = [
+    'tasks' => $tasks,
+    'projects' => $projects,
+    'showAll' => $showAll,
+    'category' => $category
+];
 
-    $add = isset($_GET['add']);
+if(!$isLoggedUser) {
+    $content = renderTemplate('templates/guest.php', $guestData);
+} else {
+    $content = renderTemplate('templates/index.php',$indexData);
+}
 
-    $layoutData = [
-        'title' => 'Список задач',
-        'user' => 'Grraoo',
-        'projects' => $projects,
-        'tasks' => $tasks,
-        'content' => $content,
-        'add' => $add
-    ];
+$headerData = [
+    'logged' => $isLoggedUser,
+    'userName' => $userName,
+];
 
-    print(renderTemplate('templates/layout.php', $layoutData));
-?>
+$header = renderTemplate('templates/header.php', $headerData);
+
+$loginData = [
+    'login' => $login,
+    'users' => $users
+];
+
+$loginModal = renderTemplate('templates/login_modal.php', $loginData);
+
+$add = isset($_GET['add']);
+$activeProject = isset($_GET['project']) ? $_GET['project'] : 0;
+$title = $isLoggedUser ? 'Список задач' : 'Дела в порядке';
+
+$layoutData = [
+    'login' => $login,
+    'header' => $header,
+    'title' => $title,
+    'projects' => $projects,
+    'tasks' => $tasks,
+    'content' => $content,
+    'add' => $add,
+    'category' => $activeProject,
+    'userName' => $userName,
+    'logged' => $isLoggedUser,
+    'loginModal' => $loginModal
+];
+
+print(renderTemplate('templates/layout.php', $layoutData));
