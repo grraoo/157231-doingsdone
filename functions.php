@@ -21,16 +21,30 @@ function renderTemplate($templatePath, $templateData) {
         ob_start('ob_gzhandler');
         require $templatePath;
         $html = ob_get_clean();
-
         return $html;
     }
-
     return '';
 }
+
+/**
+ * Проверяет неправильность введённой даты
+ *
+ * @param $date string присланная формой дата
+ *
+ * @return boolean true - неверный формат даты
+ */
 
 function isErrorDate($date) {
     return !strtotime($date) || $date != date("d.m.Y", strtotime($date));
 }
+
+/**
+ * Сохраняет присланный файл в корень
+ *
+ * @param $file file присланный файл
+ *
+ * @return $file_url string путь к файлу
+ */
 
 function saveFile($file) {
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -67,7 +81,7 @@ function getUserFingerprint ($includeIp = true, $includeCity = true) {
 }
 
 /**
- * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
+ * Ищет пользователя в массиве данных по e-mail
  *
  * @param $email string E-mail для поиска пользователя
  * @param array $users массив пользователей

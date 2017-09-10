@@ -29,7 +29,7 @@
     if(!count($errors)) {
         session_start();
         $_SESSION['user'] = $currentUser;
-        header("Location: /index.php");
+        header("Location: index.php");
     }
   }
 ?>
@@ -39,7 +39,7 @@
 
     <h2 class="modal__heading">Вход на сайт</h2>
 
-    <form class="form" class="" action="/index.php?login" method="post">
+    <form class="form" class="" action="index.php?login" method="post">
         <div class="form__row">
             <label class="form__label" for="email">E-mail <sup>*</sup></label>
 

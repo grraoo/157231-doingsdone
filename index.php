@@ -26,13 +26,11 @@ $guestData  = [
     'users' => $users
 ];
 
-$showAll = isset($_GET['show_completed']) ? $_GET['show_completed'] : $show_complete_tasks;
 $category = isset($_GET['project']) ? $_GET['project'] : '';
 
 $indexData = [
     'tasks' => $tasks,
     'projects' => $projects,
-    'showAll' => $showAll,
     'category' => $category
 ];
 

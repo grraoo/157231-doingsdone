@@ -1,8 +1,11 @@
 <?php
     $tasks = $templateData['tasks'];
-    $show_complete_tasks = $templateData['showAll'];
     $projects = $templateData['projects'];
-    $category = $templateData['category'];;
+    $category = $templateData['category'];
+
+    $showAll = isset($_COOKIE['showAll']) ? $_COOKIE['showAll'] : 0;
+    $show_complete_tasks = isset($_GET['show_completed']) ? $_GET['show_completed'] : $showAll;
+    setcookie("showAll", $show_complete_tasks, time()+3600, "/");
 ?>
 <h2 class="content__main-heading">Список задач</h2>
 
