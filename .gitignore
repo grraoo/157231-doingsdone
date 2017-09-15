@@ -2,3 +2,5 @@
 .idea
 Thumbs.db
 vendor
+queries.sql
+.gitignore

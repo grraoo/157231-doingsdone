@@ -4,9 +4,10 @@ USE `schema`;
 CREATE TABLE `users` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(64) NOT NULL,
-	`register_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`email` VARCHAR(128) NOT NULL,
-	`contacts` TEXT NOT NULL
+	`passwordhash` VARCHAR(64) NOT NULL,
+	`register_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`contacts` TEXT,
 );
 
 CREATE TABLE `categories` (
