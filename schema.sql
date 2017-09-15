@@ -7,7 +7,7 @@ CREATE TABLE `users` (
 	`email` VARCHAR(128) NOT NULL,
 	`passwordhash` VARCHAR(64) NOT NULL,
 	`register_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`contacts` TEXT,
+	`contacts` TEXT
 );
 
 CREATE TABLE `categories` (
