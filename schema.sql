@@ -30,4 +30,3 @@ CREATE UNIQUE INDEX email ON users(email);
 CREATE INDEX project ON categories(name);
 CREATE INDEX user ON tasks(user_id);
 CREATE INDEX project_id ON tasks(project_id);
-CREATE INDEX user_id ON users(id);
