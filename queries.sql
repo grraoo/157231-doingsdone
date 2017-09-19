@@ -14,10 +14,10 @@ INSERT INTO `categories` (`name`, `user_id`) VALUES
 
 
 INSERT INTO `tasks` (`name`, `user_id`, `project_id`, `deadline`) VALUES
-  ('Встреча с другом', '1', '1', '2018-04-22'),
-  ('Сделать задание первого раздела', '2', '2', '2018-04-21'),
-  ('Собеседование в IT компании', '3', '3', '2018-06-01'),
-  ('Выполнить тестовое задание', '3', '3', '2018-05-25'),
+  ('Встреча с другом', '1', '1', '2017-09-22'),
+  ('Сделать задание первого раздела', '2', '2', '2017-09-21'),
+  ('Собеседование в IT компании', '3', '3', '2017-11-01'),
+  ('Выполнить тестовое задание', '3', '3', '2017-10-25'),
   ('Купить корм для кота', '2', '4', NULL),
   ('Заказать пиццу', '2', '4', NULL);
 
@@ -25,10 +25,10 @@ SELECT * FROM `tasks` WHERE `user_id` = '2';
 
 SELECT * FROM `tasks` WHERE `project_id` = '2';
 
-UPDATE `tasks` SET `done` = '2017-09-15'
+UPDATE `tasks` SET `done` = NOW()
 WHERE `id` = '19';
 
-SELECT * FROM `tasks` WHERE `deadline` = '2017-09-16';
+SELECT * FROM `tasks` WHERE `deadline` = NOW() + INTERVAL 1 DAY;
 
 UPDATE `tasks` SET `name` = 'Выспаться'
 WHERE `id` = '19';
