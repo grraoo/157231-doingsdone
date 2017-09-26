@@ -136,7 +136,6 @@ function getUserByEmail ($email, $users) {
 
 
         $values = array_merge([$stmt, $types], $stmt_data);
-        // print_r($values);
 
         $func = 'mysqli_stmt_bind_param';
         $func(...$values);
@@ -156,12 +155,14 @@ function getUserByEmail ($email, $users) {
  * @return $rows массив данных по запросу
  */
 function selectDB ($con, $sql, $data = []) {
+    $rows = [];
     $stmt = db_get_prepare_stmt($con, $sql, $data);
-    mysqli_stmt_execute($stmt);
-
-    $result = mysqli_stmt_get_result($stmt);
-
-    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
+    if($stmt) {
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if($result) {
+            $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        }
+    }
     return $rows;
 }
